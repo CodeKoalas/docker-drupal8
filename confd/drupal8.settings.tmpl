@@ -1,0 +1,44 @@
+<?php
+
+$databases['default']['default'] = array (
+  'database' => {{getenv "MYSQL_DATABASE"}},
+  'username' => {{getenv "MYSQL_USER"}},
+  'password' => {{getenv "MYSQL_PASSWORD"}},
+  'prefix' => '',
+  'host' => {{getenv "MYSQL_SERVER"}},
+  'host' => 'mysql',
+  'port' => '3306',
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' => 'mysql',
+);
+
+$config_directories = array();
+
+$settings['hash_salt'] = 'm2nG9ERZytBVmF4OoYR7lc-2S9Gd5bHHbbxqnYNiaXHIzGgzvMbA2FweA5LkgE3AJ3Tf0k9Sng';
+
+$settings['update_free_access'] = FALSE;
+
+if ($settings['hash_salt']) {
+  $prefix = 'drupal.' . hash('sha256', 'drupal.' . $settings['hash_salt']);
+  $apc_loader = new \Symfony\Component\ClassLoader\ApcClassLoader($prefix, $class_loader);
+  unset($prefix);
+  $class_loader->unregister();
+  $apc_loader->register();
+  $class_loader = $apc_loader;
+}
+*/
+
+$settings['container_yamls'][] = __DIR__ . '/services.yml';
+
+$settings['install_profile'] = 'standard';
+$config_directories['sync'] = 'sites/default/files/config_oeSVvfhhZ_GsV4VDStU44Y8KsfvHL-Lu-0Trnk5SSi5BCuvx32J5kOFMGOS2xSPZv7xo2qLpzg/sync';
+
+$settings['trusted_host_patterns'] = array(
+  {{getenv "DRUPAL_TRUSTED_HOSTS"}},
+  'codekoalas\.com',
+  'sociy\.io',
+  'stagingserver\.site',
+  'dev',
+);
+
+$settings['base_url'] = {{getenv "DRUPAL_BASE_URL"}};
