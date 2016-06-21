@@ -7,12 +7,11 @@ RUN apt-get update && apt-get install -y \
 		php7.0-fpm php7.0-curl php7.0-gd php7.0-mysql php7.0-mcrypt php7.0-gmp php7.0-ldap  \
 		php-pear php-console-table php-apcu php-mongodb \
 		apache2 \
-		vim \
         --no-install-recommends # && rm -r /var/lib/apt/lists/*
 
 RUN a2enmod ssl rewrite proxy_fcgi headers
 
-RUN mkdir -p /var/lock/apache2 /var/run/apache2 /var/log/supervisor /var/run/php /mnt/sites-files /etc/confd/{conf.d,templates}
+RUN mkdir -p /var/lock/apache2 /var/run/apache2 /var/log/supervisor /var/run/php /mnt/sites-files /etc/confd/conf.d /etc/confd/templates
 
 #Install drush
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer \
@@ -45,7 +44,7 @@ COPY confd/ssmtp.tmpl /etc/confd/templates/ssmtp.tmpl
 RUN crontab /root/crons.conf
 
 # Volumes
-VOLUME ["/var/www/site", “/etc/apache2/sites-enabled”, "/mnt/sites-files"]
+VOLUME /var/www/site /etc/apache2/sites-enabled /mnt/sites-files
 
 EXPOSE 80
 
