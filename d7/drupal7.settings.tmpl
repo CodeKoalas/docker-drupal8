@@ -5,10 +5,10 @@ $databases = array (
   array (
     'default' =>
     array (
-    'database' => getenv('MYSQL_DATABASE'),
-    'username' => getenv('MYSQL_USER'),
-    'password' => getenv('MYSQL_PASSWORD'),
-    'host' => getenv('MYSQL_SERVER'),
+    'database' => {{getenv "MYSQL_DATABASE" }},
+    'username' => {{getenv "MYSQL_USER" }},
+    'password' => {{getenv "MYSQL_PASSWORD" }},
+    'host' => {{getenv "MYSQL_SERVER" }},
       'port' => '3306',
       'driver' => 'mysql',
       'prefix' => '',
@@ -21,8 +21,8 @@ $update_free_access = FALSE;
 
 $drupal_hash_salt = '';
 
-$base_url = getenv('DRUPAL_BASE_URL');
-$_SERVER['HTTPS'] = getenv('DRUPAL_HTTPS');
+$base_url = {{getenv "DRUPAL_BASE_URL" }};
+$_SERVER['HTTPS'] = {{getenv "DRUPAL_HTTPS" }};
 
 
 ini_set('session.gc_probability', 1);
