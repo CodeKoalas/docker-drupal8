@@ -39,6 +39,7 @@ COPY site.conf /etc/apache2/sites-available/000-default.conf
 COPY php.ini /etc/php/7.0/fpm/php.ini
 COPY confd/ssmtp.toml /etc/confd/conf.d/ssmtp.toml
 COPY confd/ssmtp.tmpl /etc/confd/templates/ssmtp.tmpl
+COPY drupal-settings /root/drupal-settings/
 
 #Add cron job
 RUN crontab /root/crons.conf
