@@ -33,7 +33,7 @@ RUN chmod +x /usr/local/bin/confd
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY www.conf /etc/php/7.0/fpm/pool.d/www.conf
-COPY crons.conf start.sh /root/crons.conf
+COPY crons.conf start.sh /root/
 COPY site.conf /etc/apache2/sites-available/000-default.conf
 COPY php.ini /etc/php/7.0/fpm/php.ini
 COPY confd/ssmtp.toml /etc/confd/conf.d/ssmtp.toml
