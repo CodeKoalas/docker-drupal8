@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
 		php7.0-fpm php7.0-curl php7.0-gd php7.0-mysql php7.0-mcrypt php7.0-gmp php7.0-ldap  \
 		php-pear php-console-table php-apcu php-mongodb \
 		apache2 \
-        --no-install-recommends # && rm -r /var/lib/apt/lists/* && apt-get -y upgrade
+        --no-install-recommends && apt-get -y upgrade && rm -r /var/lib/apt/lists/*
 
 RUN a2enmod ssl rewrite proxy_fcgi headers remoteip
 
