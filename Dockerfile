@@ -12,10 +12,11 @@ RUN a2enmod ssl rewrite proxy_fcgi headers remoteip
 
 RUN mkdir -p /var/lock/apache2 /var/run/apache2 /var/log/supervisor /var/run/php /mnt/sites-files /etc/confd/conf.d /etc/confd/templates
 
-#Install drush
+# Install Composer
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer \
 && ln -s /usr/local/bin/composer /usr/bin/composer
 
+# Install Drush
 RUN git clone https://github.com/drush-ops/drush.git /usr/local/src/drush && cd /usr/local/src/drush \
 && git checkout 8.1.2 && cd /usr/local/src/drush && composer install && ln -s /usr/local/src/drush/drush /usr/local/bin/drush
 
@@ -39,9 +40,6 @@ COPY apache2.conf /etc/apache2/apache2.conf
 COPY drupal-settings.sh crons.conf start.sh mysqlimport.sh /root/
 COPY drupal7-settings /root/drupal7-settings/
 COPY drupal8-settings /root/drupal8-settings/
-
-#Add cron job
-RUN crontab /root/crons.conf
 
 # Volumes
 VOLUME /var/www/site /etc/apache2/sites-enabled /mnt/sites-files

@@ -1,10 +1,14 @@
 #!/bin/bash
 
-# Set up SSMTP Config Files
+# Run Confd to make config files
 /usr/local/bin/confd -onetime -backend env
 
 # Add gitlab to hosts file
 grep -q -F "$GIT_HOSTS" /etc/hosts  || echo $GIT_HOSTS >> /etc/hosts
+
+# Add cron jobs
+sed -i "/drush/s/^\w*/$(shuf -i 1-60 -n 1)/" /root/crons.conf
+crontab /root/crons.conf
 
 # Clone repo to container
 git clone -b $GIT_BRANCH $GIT_REPO /var/www/site/
