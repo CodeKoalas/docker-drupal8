@@ -5,7 +5,9 @@ Custom build for Code Koalas' Drupal 8 deployments.
 Consists of Ubuntu 16.04, PHP7 (FPM) and Apache 2.4.
 
 # Environment variables
-* VIRTUAL_HOST= FQDN of website
+* VIRTUAL_HOST= FQDN of website with a "." at the beginning
+* WWW= "true" if the site should redirect to www.fqdn
+* LOCAL= "true" if not in production (installs xdebug)
 * GIT_HOSTS= Hosts file entry to be added
 * GIT_REPO= URL of Git repo to pull from
 * GIT_BRANCH= Git branch

@@ -2,7 +2,7 @@ FROM ubuntu:16.04
 
 RUN apt-get update && apt-get install -y \
                 ca-certificates curl cron git supervisor mysql-client\
-		libxml2-dev mime-support ssmtp imagemagick ghostscript \
+		libxml2-dev mime-support ssmtp \
 		php7.0-fpm php7.0-curl php7.0-gd php7.0-mysql php7.0-mcrypt php7.0-gmp php7.0-ldap  \
 		php-pear php-console-table php-apcu php-mongodb \
 		apache2 \
@@ -37,7 +37,7 @@ COPY confd /etc/confd/
 COPY apache2.conf /etc/apache2/apache2.conf
 
 # Copy in drupal-specific files
-COPY drupal-settings.sh crons.conf start.sh mysqlimport.sh /root/
+COPY wwwsite.conf drupal-settings.sh crons.conf start.sh mysqlimport.sh /root/
 COPY drupal7-settings /root/drupal7-settings/
 COPY drupal8-settings /root/drupal8-settings/
 

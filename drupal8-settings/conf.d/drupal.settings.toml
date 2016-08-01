@@ -1,4 +1,4 @@
 [template]
 src = "drupal.settings.tmpl"
-dest = "/var/www/site/docroot/sites/default/settings.php"
+dest = "/root/apache_docroot/sites/default/settings.php"
 mode = "0644"
