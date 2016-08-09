@@ -37,7 +37,6 @@ fi
 # Install appropriate apache config and restart apache
 if [[ -n "$WWW" &&  $WWW = "true" ]] ; then
   cp /root/wwwsite.conf /etc/apache2/sites-enabled/000-default.conf
-  /usr/bin/supervisorctl restart apache2
 fi
 
 # Import starter.sql, if needed
@@ -46,3 +45,5 @@ fi
 # Create Drupal settings, if they don't exist
 ln -s $APACHE_DOCROOT /root/apache_docroot
 /root/drupal-settings.sh
+
+/usr/bin/supervisorctl restart apache2
