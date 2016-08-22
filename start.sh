@@ -53,9 +53,12 @@ fi
 ln -s $APACHE_DOCROOT /root/apache_docroot
 /root/drupal-settings.sh
 
+<<<<<<< HEAD
 # Load configs
 /root/load-configs.sh
 
+=======
+>>>>>>> catching up with master branch
 # Hide Drupal errors in production sites
 if [[ -n "$PRODUCTION" && $PRODUCTION = "true" ]] ; then
   grep -q -F "\$conf['error_level'] = 0;" $APACHE_DOCROOT/sites/default/settings.php  || echo "\$conf['error_level'] = 0;" >> $APACHE_DOCROOT/sites/default/settings.php
@@ -63,9 +66,12 @@ else
   grep -q -F 'Header set X-Robots-Tag "noindex, nofollow"' /etc/apache2/sites-enabled/000-default.conf || sed -i 's/.*\/VirtualHost.*/\tHeader set X-Robots-Tag \"noindex, nofollow\"\n\n&/' /etc/apache2/sites-enabled/000-default.conf
 fi
 
+<<<<<<< HEAD
 # set permissions on php log
 chmod 640 /var/log/php7.0-fpm.log
 chown www-data:www-data /var/log/php7.0-fpm.log
 
 crontab /root/crons.conf
+=======
+>>>>>>> catching up with master branch
 /usr/bin/supervisorctl restart apache2
