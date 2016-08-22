@@ -38,6 +38,7 @@ COPY apache2.conf /etc/apache2/apache2.conf
 
 # Copy in drupal-specific files
 COPY wwwsite.conf drupal-settings.sh crons.conf start.sh mysqlimport.sh /root/
+COPY bash_aliases /root/.bash_aliases
 COPY drupal7-settings /root/drupal7-settings/
 COPY drupal8-settings /root/drupal8-settings/
 
