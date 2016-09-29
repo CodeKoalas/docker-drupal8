@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 
 RUN apt-get update && apt-get install -y \
-                ca-certificates curl cron git supervisor mysql-client\
+                ca-certificates curl cron git supervisor mysql-client unzip \
 		libxml2-dev mime-support ssmtp imagemagick ghostscript \
 		php7.0-fpm php7.0-curl php7.0-gd php7.0-mysql php7.0-mcrypt php7.0-gmp php7.0-ldap  \
 		php-pear php-console-table php-apcu php-mongodb \
