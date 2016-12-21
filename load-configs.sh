@@ -19,4 +19,9 @@ if [[ -n "$CONF_REPO" && ! -z $CONF_REPO ]] ; then
     cp /root/configs/php.ini /etc/php5/fpm/php.ini
     supervisorctl restart php-fpm
   fi
+
+  if [[ -e /root/configs/crons.conf ]] ; then
+    cat /root/configs/crons.conf >> /root/crons.conf
+  fi
+  
 fi
