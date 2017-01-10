@@ -1,9 +1,10 @@
 FROM ubuntu:16.04
 
 RUN apt-get update && apt-get install -y \
-                ca-certificates curl cron git supervisor mysql-client unzip \
-		libxml2-dev mime-support ssmtp imagemagick ghostscript \
-		php7.0-fpm php7.0-curl php7.0-gd php7.0-mysql php7.0-mcrypt php7.0-gmp php7.0-ldap  \
+                ca-certificates curl cron git supervisor mysql-client vim unzip \
+		libxml2-dev mime-support ssmtp \
+		imagemagick ghostscript \
+		php7.0-fpm php7.0-curl php7.0-gd php7.0-mysql php7.0-mcrypt php7.0-gmp php7.0-ldap php7.0-zip \
 		php-pear php-console-table php-apcu php-mongodb \
 		apache2 \
         --no-install-recommends && apt-get -y upgrade && rm -r /var/lib/apt/lists/*
@@ -38,7 +39,7 @@ COPY apache2.conf /etc/apache2/apache2.conf
 COPY registry_rebuild /root/.drush/registry_rebuild
 
 # Copy in drupal-specific files
-COPY wwwsite.conf drupal-settings.sh crons.conf start.sh mysqlimport.sh mysqlexport.sh load-configs.sh /root/
+COPY wwwsite.conf drupal-settings.sh crons.conf start.sh mysqlimport.sh mysqlexport.sh load-configs.sh xdebug-php.ini /root/
 COPY bash_aliases /root/.bash_aliases
 COPY drupal7-settings /root/drupal7-settings/
 COPY drupal8-settings /root/drupal8-settings/
@@ -47,5 +48,7 @@ COPY drupal8-settings /root/drupal8-settings/
 VOLUME /var/www/site /etc/apache2/sites-enabled /mnt/sites-files
 
 EXPOSE 80
+
+WORKDIR /var/www/site
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]

@@ -34,10 +34,12 @@ chown www-data:www-data -R /var/www/site/sync
 # Set DRUPAL_VERSION
 echo $(/usr/local/src/drush/drush --root=$APACHE_DOCROOT status | grep "Drupal version" | awk '{ print substr ($(NF), 0, 2) }') > /root/drupal-version.txt
 
+echo "[$(date +"%Y-%m-%d %H:%M:%S:%3N %Z")] NOTICE: Setting up XDebug based on state of LOCAL envvar"
 if [[ -n "$LOCAL" &&  $LOCAL = "true" ]] ; then
   /usr/bin/apt-get update && apt-get install -y \
     php-xdebug \
     --no-install-recommends && rm -r /var/lib/apt/lists/*
+  cp /root/xdebug-php.ini /etc/php/7.0/fpm/php.ini
   /usr/bin/supervisorctl restart php-fpm
 fi
 
@@ -59,6 +61,7 @@ ln -s $APACHE_DOCROOT /root/apache_docroot
 # Hide Drupal errors in production sites
 if [[ -n "$PRODUCTION" && $PRODUCTION = "true" ]] ; then
   grep -q -F "\$conf['error_level'] = 0;" $APACHE_DOCROOT/sites/default/settings.php  || echo "\$conf['error_level'] = 0;" >> $APACHE_DOCROOT/sites/default/settings.php
+  grep -q -F "ini_set('error_reporting', E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_STRICT);" $APACHE_DOCROOT/sites/default/settings.php  || echo "ini_set('error_reporting', E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_STRICT);" >> $APACHE_DOCROOT/sites/default/settings.php
 else
   grep -q -F 'Header set X-Robots-Tag "noindex, nofollow"' /etc/apache2/sites-enabled/000-default.conf || sed -i 's/.*\/VirtualHost.*/\tHeader set X-Robots-Tag \"noindex, nofollow\"\n\n&/' /etc/apache2/sites-enabled/000-default.conf
 fi
