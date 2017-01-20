@@ -70,5 +70,13 @@ fi
 chmod 640 /var/log/php7.0-fpm.log
 chown www-data:www-data /var/log/php7.0-fpm.log
 
+# Set up New Relic
+echo "Enabling APM metrics for ${NR_APP_NAME}"
+newrelic-install install
+ 
+# Update the application name
+sed -i "s/newrelic.appname = \"PHP Application\"/newrelic.appname = \"${NR_APP_NAME}_${hostname}\"/" /etc/php/7.0/mods-available/newrelic.ini
+sed -i "s/newrelic.license = \"12345asdfg54321gfdsa\"/newrelic.license = \"${NR_INSTALL_KEY}_${hostname}\"/" /etc/php/7.0/mods-available/newrelic.ini
+
 crontab /root/crons.conf
 /usr/bin/supervisorctl restart apache2

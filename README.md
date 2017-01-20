@@ -25,6 +25,11 @@ Consists of Ubuntu 16.04, PHP7 (FPM) and Apache 2.4.
 * CONF_REPO= Repo for config files (php.ini and 000-default.conf)
 * CONF_REPO_BRANCH= Branch for CONF_REPO
 
+# New Relic variables
+* NR_INSTALL_SILENT= 1
+* NR_INSTALL_KEY= New Relic License Key
+* NR_APP_NAME AppName + containerID
+
 # BASH aliases
 `mysqlc` connects to MySQL based on Environment Variables
 `mysqld > file.sql` dumps database to file.sql based on Environment Variables

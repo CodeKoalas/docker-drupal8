@@ -11,6 +11,14 @@ RUN apt-get update && apt-get install -y \
 
 RUN a2enmod ssl rewrite proxy_fcgi headers remoteip
 
+# Install New Relic daemon
+RUN echo newrelic-php5 newrelic-php5/application-name string "AppName" | debconf-set-selections && \
+    echo newrelic-php5 newrelic-php5/license-key string "12345asdfg54321gfdsa" | debconf-set-selections
+ENV NR_INSTALL_SILENT true
+RUN env && curl https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
+    echo "deb http://apt.newrelic.com/debian/ newrelic non-free" > /etc/apt/sources.list.d/newrelic.list && \
+    apt-get update && apt-get -y install newrelic-php5
+
 RUN mkdir -p /var/lock/apache2 /var/run/apache2 /var/log/supervisor /var/run/php /mnt/sites-files /etc/confd/conf.d /etc/confd/templates
 
 # Install Composer
