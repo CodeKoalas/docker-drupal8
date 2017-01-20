@@ -19,9 +19,9 @@ Consists of Ubuntu 16.04, PHP7 (FPM) and Apache 2.4.
 * DRUPAL_BASE_URL= Base URL for Drupal config
 * DRUPAL_HTTPS= Set to on or off
 * APACHE_DOCROOT= Apache Docroot - defaults to `/var/www/site/docroot`
-* SESAuthUser= AWS SES SMTP username
-* SESAuthPass= AWS SES SMTP password
-* SESmailhub= AWS SES SMTP address
+* SESAuthUser= AWS SES SMTP username starting with 'AuthUser='
+* SESAuthPass= AWS SES SMTP password starting with 'AuthPass='
+* SESmailhub= AWS SES SMTP address, with port
 * CONF_REPO= Repo for config files (php.ini and 000-default.conf)
 * CONF_REPO_BRANCH= Branch for CONF_REPO
 
