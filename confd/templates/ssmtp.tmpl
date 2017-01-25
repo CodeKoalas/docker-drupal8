@@ -3,8 +3,8 @@ debug=yes
 mailhub={{getenv "SESmailhub" }}
 
 Hostname={{getenv "HOSTNAME"}}
-AuthUser={{getenv "SESAuthUser" }}
-AuthPass={{getenv "SESAuthPass" }}
+{{getenv "SESAuthUser" }}
+{{getenv "SESAuthPass" }}
 
 FromLineOverride=yes
-UseTLS=yes
+UseSTARTTLS=yes
