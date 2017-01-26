@@ -34,8 +34,8 @@ chown www-data:www-data -R /var/www/site/sync
 # Set DRUPAL_VERSION
 echo $(/usr/local/src/drush/drush --root=$APACHE_DOCROOT status | grep "Drupal version" | awk '{ print substr ($(NF), 0, 2) }') > /root/drupal-version.txt
 
-echo "[$(date +"%Y-%m-%d %H:%M:%S:%3N %Z")] NOTICE: Setting up XDebug based on state of LOCAL envvar"
 if [[ -n "$LOCAL" &&  $LOCAL = "true" ]] ; then
+  echo "[$(date +"%Y-%m-%d %H:%M:%S:%3N %Z")] NOTICE: Setting up XDebug based on state of LOCAL envvar"
   /usr/bin/apt-get update && apt-get install -y \
     php-xdebug \
     --no-install-recommends && rm -r /var/lib/apt/lists/*
@@ -70,13 +70,18 @@ fi
 chmod 640 /var/log/php7.0-fpm.log
 chown www-data:www-data /var/log/php7.0-fpm.log
 
-# Set up New Relic
-echo "Enabling APM metrics for ${NR_APP_NAME}"
-newrelic-install install
+# Set up New Relic if NR_INSTALL_KEY = "true"
+if [[ -n "$NR_INSTALL_KEY" ]] ; then
+  echo "Enabling APM metrics for ${VIRTUAL_HOST}"
+  newrelic-install install
  
-# Update the application name
-sed -i "s/newrelic.appname = \"PHP Application\"/newrelic.appname = \"${NR_APP_NAME}_${hostname}\"/" /etc/php/7.0/mods-available/newrelic.ini
-sed -i "s/newrelic.license = \"12345asdfg54321gfdsa\"/newrelic.license = \"${NR_INSTALL_KEY}_${hostname}\"/" /etc/php/7.0/mods-available/newrelic.ini
+  # Update the application name
+  sed -i "s/newrelic.appname = \"\(.*\)\"/newrelic.appname = \"${VIRTUAL_HOST}_${HOSTNAME}\"/" /etc/php/7.0/fpm/conf.d/newrelic.ini
+  sed -i "s/^newrelic.license = \"\(.*\)""/newrelic.license = \"${NR_INSTALL_KEY}\"/" /etc/php/7.0/fpm/conf.d/newrelic.ini
+
+  /etc/init.d/newrelic-daemon stop
+  /usr/bin/supervisorctl restart php-fpm
+fi
 
 crontab /root/crons.conf
 /usr/bin/supervisorctl restart apache2
