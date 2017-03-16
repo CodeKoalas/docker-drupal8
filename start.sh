@@ -33,9 +33,6 @@ cd $APACHE_DOCROOT/sites/default && ln -sf /mnt/sites-files/public files
 cd /var/www/site/ && ln -sf /mnt/sites-files/private private
 chown www-data:www-data -R /var/www/site/sync
 
-# Set DRUPAL_VERSION
-echo $(/usr/local/src/drush/drush --root=$APACHE_DOCROOT status | grep "Drupal version" | awk '{ print substr ($(NF), 0, 2) }') > /root/drupal-version.txt
-
 if [[ -n "$LOCAL" &&  $LOCAL = "true" ]] ; then
   echo "[$(date +"%Y-%m-%d %H:%M:%S:%3N %Z")] NOTICE: Setting up XDebug based on state of LOCAL envvar"
   /usr/bin/apt-get update && apt-get install -y \
@@ -44,6 +41,16 @@ if [[ -n "$LOCAL" &&  $LOCAL = "true" ]] ; then
   cp /root/xdebug-php.ini /etc/php/7.0/fpm/php.ini
   /usr/bin/supervisorctl restart php-fpm
 fi
+
+# Copy in post-merge script to run composer install
+cat /root/post-merge >> /var/www/site/.git/hooks/post-merge
+chmod +x /var/www/site/.git/hooks/post-merge
+
+# Run composer install
+composer install
+
+# Set DRUPAL_VERSION
+echo $(/usr/local/src/drush/drush --root=$APACHE_DOCROOT status | grep "Drupal version" | awk '{ print substr ($(NF), 0, 2) }') > /root/drupal-version.txt
 
 # Install appropriate apache config and restart apache
 if [[ -n "$WWW" &&  $WWW = "true" ]] ; then
