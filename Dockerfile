@@ -22,7 +22,7 @@ RUN git clone https://github.com/drush-ops/drush.git /usr/local/src/drush && cd 
 
 # Install Drupal Console
 ADD https://drupalconsole.com/installer /usr/local/bin/drupal
-RUN chmod +x /usr/local/bin/drupal && /usr/local/bin/drupal init --override -n && /usr/local/bin/drupal settings:set checked "true"
+RUN chmod +x /usr/local/bin/drupal 
 
 # Install Confd
 ADD https://github.com/kelseyhightower/confd/releases/download/v0.11.0/confd-0.11.0-linux-amd64 /usr/local/bin/confd
