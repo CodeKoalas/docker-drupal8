@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y \
                 ca-certificates curl cron git supervisor mysql-client vim unzip \
 		libxml2-dev mime-support ssmtp \
 		php7.0-fpm php7.0-curl php7.0-gd php7.0-mysql php7.0-mcrypt php7.0-gmp php7.0-ldap php7.0-zip \
-		php-pear php-console-table php-apcu php-mongodb \
+		php7.0-bcmath php-pear php-console-table php-apcu php-mongodb \
 		apache2 \
         --no-install-recommends && apt-get -y upgrade && rm -r /var/lib/apt/lists/*
 
