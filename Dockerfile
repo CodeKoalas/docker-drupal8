@@ -1,12 +1,13 @@
 FROM ubuntu:16.04
 
-RUN apt-get update && apt-get install -y \
-                ca-certificates curl cron git supervisor mysql-client vim unzip \
-		libxml2-dev mime-support ssmtp \
-		php7.0-fpm php7.0-curl php7.0-gd php7.0-mysql php7.0-mcrypt php7.0-gmp php7.0-ldap php7.0-zip \
-		php7.0-bcmath php-pear php-console-table php-apcu php-mongodb php-ssh2 \
-		apache2 \
-        --no-install-recommends && apt-get -y upgrade && rm -r /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y python-software-properties software-properties-common \
+  --no-install-recommends --allow-unauthenticated
+RUN add-apt-repository ppa:ondrej/php -y | echo 0
+RUN apt-get update && apt-get install -y --allow-unauthenticated --no-install-recommends \
+    ca-certificates curl cron git supervisor mysql-client vim unzip libxml2-dev mime-support ssmtp \
+    php7.2-fpm php7.2-curl php7.2-gd php7.2-mysql php7.2-gmp php7.2-ldap php7.2-zip \
+    php7.2-bcmath php-pear php-console-table php-apcu php-mongodb php-ssh2 \
+    apache2 && apt-get -y --allow-unauthenticated upgrade && rm -r /var/lib/apt/lists/*
 
 RUN a2enmod ssl rewrite proxy_fcgi headers remoteip
 
@@ -29,8 +30,8 @@ ADD https://github.com/kelseyhightower/confd/releases/download/v0.11.0/confd-0.1
 RUN chmod +x /usr/local/bin/confd
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY www.conf /etc/php/7.0/fpm/pool.d/www.conf
-COPY php.ini /etc/php/7.0/fpm/php.ini
+COPY www.conf /etc/php/7.2/fpm/pool.d/www.conf
+COPY php.ini /etc/php/7.2/fpm/php.ini
 COPY site.conf /etc/apache2/sites-available/000-default.conf
 COPY remoteip.conf /etc/apache2/conf-enabled/remoteip.conf
 COPY confd /etc/confd/
