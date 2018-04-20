@@ -1,10 +1,12 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends --allow-unauthenticated tzdata
+
+RUN apt-get install -y \
                 ca-certificates curl cron git supervisor mysql-client vim unzip \
 		libxml2-dev mime-support ssmtp rsync patch \
-		php7.0-fpm php7.0-curl php7.0-gd php7.0-mysql php7.0-mcrypt php7.0-gmp php7.0-ldap php7.0-zip \
-		php7.0-bcmath php-pear php-console-table php-apcu php-mongodb php-ssh2 \
+		php7.2-fpm php7.2-curl php7.2-gd php7.2-mysql php7.2-gmp php7.2-ldap php7.2-zip \
+		php7.2-bcmath php-pear php-console-table php-apcu php-mongodb php-ssh2 \
 		apache2 \
         --no-install-recommends && apt-get -y upgrade && rm -r /var/lib/apt/lists/*
 
@@ -29,8 +31,8 @@ ADD https://github.com/kelseyhightower/confd/releases/download/v0.15.0/confd-0.1
 RUN chmod +x /usr/local/bin/confd
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY www.conf /etc/php/7.0/fpm/pool.d/www.conf
-COPY php.ini /etc/php/7.0/fpm/php.ini
+COPY www.conf /etc/php/7.2/fpm/pool.d/www.conf
+COPY php.ini /etc/php/7.2/fpm/php.ini
 COPY site.conf /etc/apache2/sites-available/000-default.conf
 COPY remoteip.conf /etc/apache2/conf-enabled/remoteip.conf
 COPY confd /etc/confd/

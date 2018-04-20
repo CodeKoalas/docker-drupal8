@@ -42,7 +42,7 @@ if [[ -n "$LOCAL" &&  $LOCAL = "true" ]] ; then
   /usr/bin/apt-get update && apt-get install -y \
     php-xdebug \
     --no-install-recommends && rm -r /var/lib/apt/lists/*
-  cp /root/xdebug-php.ini /etc/php/7.0/fpm/php.ini
+  cp /root/xdebug-php.ini /etc/php/7.2/fpm/php.ini
   /usr/bin/supervisorctl restart php-fpm
 fi
 
@@ -80,8 +80,8 @@ else
 fi
 
 # set permissions on php log
-chmod 640 /var/log/php7.0-fpm.log
-chown www-data:www-data /var/log/php7.0-fpm.log
+chmod 640 /var/log/php7.2-fpm.log
+chown www-data:www-data /var/log/php7.2-fpm.log
 
 crontab /root/crons.conf
 /usr/bin/supervisorctl restart apache2
@@ -89,3 +89,4 @@ crontab /root/crons.conf
 # take ownership of public files after apache has started
 chown www-data:www-data -R /mnt/sites-files/public
 chown www-data:www-data -R /mnt/sites-files/private
+chown -R www-data:www-data vendor/
