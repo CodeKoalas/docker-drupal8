@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends --allow-unauthe
 RUN apt-get install -y \
                 ca-certificates curl cron git supervisor mysql-client vim unzip \
 		libxml2-dev mime-support ssmtp rsync patch \
-		php7.2-fpm php7.2-curl php7.2-gd php7.2-mysql php7.2-gmp php7.2-ldap php7.2-zip \
+		php7.2-fpm php7.2-curl php7.2-gd php7.2-mysql php7.2-gmp php7.2-ldap php7.2-zip php7.2-mbstring \
 		php7.2-bcmath php-pear php-console-table php-apcu php-mongodb php-ssh2 \
 		apache2 \
         --no-install-recommends && apt-get -y upgrade && rm -r /var/lib/apt/lists/*
