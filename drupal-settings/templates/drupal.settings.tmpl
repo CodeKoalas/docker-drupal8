@@ -49,3 +49,6 @@ $custom_settings = DRUPAL_ROOT . '/sites/default/custom.settings.php';
 if (file_exists($custom_settings)) {
   include $custom_settings;
 }
+
+$settings['reverse_proxy'] = TRUE;
+$settings['reverse_proxy_addresses'] = array($_SERVER['REMOTE_ADDR']);
