@@ -89,4 +89,6 @@ crontab /root/crons.conf
 # take ownership of public files after apache has started
 chown www-data:www-data -R /mnt/sites-files/public
 chown www-data:www-data -R /mnt/sites-files/private
-chown -R www-data:www-data vendor/
+if [ -d vendor/ ]; then
+  chown -R www-data:www-data vendor/
+fi
