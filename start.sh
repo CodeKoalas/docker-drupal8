@@ -19,7 +19,7 @@ if [[ ! -n "$PRODUCTION" || $PRODUCTION != "true" ]] ; then
 fi
 
 # Clone repo to container
-git clone --depth=1 -b $GIT_BRANCH $GIT_REPO /var/www/site/
+GIT_SSL_NO_VERIFY=true git clone --depth=1 -b $GIT_BRANCH $GIT_REPO /var/www/site/
 
 # Run composer install
 composer install
